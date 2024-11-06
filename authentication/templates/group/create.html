@@ -1,0 +1,75 @@
+{% extends "admin.html" %}
+
+{% block content %}
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Nuevo rol de usuario</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="{% url 'appointment:dashboard' %}">Tablero</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'authentication:role' %}">Roles</a></li>
+          <li class="breadcrumb-item active">Nuevo rol de usuario</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">Registro de nuevo rol de usuario</h5>
+          </div>
+          <div class="card-body">
+            <form action="{% url 'authentication:role_create' %}" method="post">
+              {% csrf_token %}
+              {% for field in form.visible_fields %}
+                {% if field.name == 'name' %}
+                <div class="form-group">
+                  <label for="{{ field.name }}">{{ field.label }}</label>
+                  {{ field }}
+                </div> 
+                {% endif %}
+              {% endfor %}
+              <label for="permissions">Permisos</label>
+              <div class="row">
+              {% for content in permissions %}
+                <div class="col-md-6">
+                  <div class="card card-outline card-info">
+                    <div class="card-header">
+                      <h5 class="card-title" style="text-transform:uppercase">{{ content.label }}</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                      {% for perm in content.perms %}
+                        <div class="col-md-6">
+                          <div class="icheck-primary d-inline">
+                            <input type="checkbox" value="{{ perm.pk }}" name="permissions" id="id_permissions_{{ perm.pk }}" >
+                            <label for="id_permissions_{{ perm.pk }}">
+                            {{ perm.name }}
+                            </label>
+                          </div>
+                        </div>
+                      {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}  
+              </div>
+              <hr>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">CANCELAR</button>
+              <button type="submit" class="btn btn-primary float-right">GUARDAR</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

@@ -1,0 +1,67 @@
+{% extends "admin.html" %}
+
+{% block content %}
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Permisos y roles de usuario</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="{% url 'appointment:dashboard' %}">Tablero</a></li>
+          <li class="breadcrumb-item active">Permisos y roles</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">Permisos y roles de <b>
+              {% comment %} <em>{{ object.first_name }} {{ object.last_name }}</em> {% endcomment %}
+            \</b></h5>
+          </div>
+          <div class="card-body">
+            {% comment %} <form action="{% url 'authentication:user_edit' object.pk %}" method="post" > {% endcomment %}
+              <div class="row">
+                {% csrf_token %}
+                <div class="error-form">
+                </div>
+                {% comment %} {% for field in form.visible_fields %}
+                {% if field.name == 'is_superuser' or field.name == 'is_staff' or field.name == 'is_active' %}
+                <div class="col-md-4 border-right">
+                  <div class="description-block">
+                    <div class="form-group">
+                      <label for="{{field.name}}">{{ field.label }}</label>
+                      {{ field }}
+                    </div>
+                  </div>
+                </div>
+                {% else %}
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="{{field.name}}">{{ field.label }}</label>
+                    {{ field }}
+                  </div>
+                </div>
+                {% endif %}
+                {% endfor %} {% endcomment %}
+              </div>   
+            {% comment %} <form> {% endcomment %}
+            <hr> 
+            <div class="row justify-content-between" id="actions">
+              <button type="button" class="btn btn-danger" ><i class="fas fa-times"></i> CANCELAR </button>
+              <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> GUARDAR  </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  {% endblock content %}
